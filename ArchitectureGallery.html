@@ -1,0 +1,430 @@
+<html>
+    <head>
+        <meta charset="UFT-8"/>
+        <title>
+            GalleryUpload
+        </title>
+        
+        <style>
+            @keyframes spin {
+  to { 
+  transform: rotate(360deg);
+   }
+}
+            body{
+                font-family: Arial, Helvetica, sans-serif;
+                padding: 10px;
+
+            }
+            
+            
+            
+            /* Custom styling */
+.upload-section {
+  max-width: 400px;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  display:none
+}
+
+.file-input-container {
+  position: relative;
+  margin: 15px 0;
+}
+
+.custom-file-button {
+  background-color: #586a66;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.custom-file-button:hover {
+  background-color: #155a8a;
+}
+
+#fileName {
+  margin-left: 10px;
+  color: #666;
+}
+
+.title-input {
+  width: 100%;
+  padding: 8px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.upload-button {
+  background-color: transparent;
+  color: black;
+  font-weight:bold;
+  padding: 10px 20px;
+  border: .5px solid black;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 100%;
+  transition: background-color 0.3s;
+}
+
+.upload-button:hover {
+  background-color: #636363d3;
+}
+statusDiv{
+    border-radius: 10px;
+    padding:1px;
+    
+}
+.GallerySection{
+    font-weight:bold;
+    font-size:25px;
+}
+.spinner {
+  position: fixed;
+  top: 70%;
+  left: 42%;
+  width: 50px;
+  height: 50px;
+  border: 6px solid #ccc;
+  border-top-color: rgb(219, 250, 219);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  z-index: 1000;
+  display:none;
+}
+
+
+.auth-section {
+  max-width: 400px;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+.auth{
+  width: 100%;
+  padding: 8px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+.auth-button {
+  background-color: transparent;
+  color: black;
+  font-weight:bold;
+  padding: 10px 20px;
+  border: .5px solid black;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 100%;
+  transition: background-color 0.3s;
+}
+#errormessage{
+    color:red;
+    font-weight:bold;
+    font-size:13px;
+}
+        </style>
+    </head>
+    <body > 
+        
+     <div class="auth-section" id="authSection">
+         <h3>Verify Yourself</h3>
+         <input type="text" placeholder="Username" class="auth" id="authUser">
+         
+         <input type="password" placeholder="Lock" class="auth" id="authLock">
+         <button class="auth-button" onclick="auth()">Verify</button>
+         <p id="errormessage"> </p>
+     </div>
+     
+     
+     
+        <div class="upload-section" id="uploadSection">
+  <h3>Upload Image to Supabase</h3>
+        
+        
+ <!-- Custom file input container -->
+  <div class="file-input-container">
+    <input 
+      type="file" 
+      id="fileInput" 
+      accept="image/*" 
+      hidden
+      onchange="updateFileName()"
+    >
+    <label for="fileInput" class="custom-file-button">
+      Choose File
+    </label>
+    <span id="fileName">No file chosen</span>
+  </div>
+
+  <input 
+    type="text" 
+    id="titleInput" 
+    placeholder="Enter image title"
+    class="title-input"
+  >
+  
+  <button onclick="uploadImage()" class="upload-button">
+    Upload
+  </button>
+  <div id="statusDiv"><p id="statusText"></p></div>
+
+
+
+
+<div>
+    <Label class="GallerySection">Gallery
+    </Label>
+</div>
+<div id="galleryDiv"></div>
+    </div>
+        
+<div id="spinner" class="spinner hidden"></div>  
+<div id="gallery"></div>
+
+</div>
+  
+  
+ 
+        <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" ></script>
+            <script>
+            
+      
+            //INITIALIZE SUPABASE
+const client = supabase.createClient('https://wljyuchpddhobtvkitgs.supabase.co','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indsanl1Y2hwZGRob2J0dmtpdGdzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDc1NTU2ODcsImV4cCI6MjA2MzEzMTY4N30.rgiNqBnDYRqGQBSbRlin1AGIcUyCJJRhjDnD-8U7dXw')
+//Function to upload image
+async function uploadImage(){
+
+const statusText= document.getElementById('statusText');
+const statusDiv = document.getElementById('statusDiv');
+statusText.textContent ="uploading..."
+ statusText.style.color='#00ffab';
+   
+
+
+const fileInput = document.getElementById('fileInput');
+const fileName = document.getElementById('fileName');
+const titleInput = document.getElementById('titleInput');
+
+const file = fileInput.files[0];
+const title = titleInput.value.trim();
+
+if (!file || !title){
+    statusText.textContent='please select an image and enter a title';
+     statusText.style.color='gold';
+ 
+    
+    
+    return;
+}
+const allowedTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+
+const filepath =`public/${Date.now()}_${file.name}`;
+
+// Upload Image to client.storage
+const {data:uploadData, error: uploadError} = await client.storage.from('image').upload(filepath,file,);
+if(uploadError){
+    console.error('upload error :',uploadError.message)
+    statusText.textContent="Upload Failed"
+    statusText.style.color='red';
+    statusDiv.style.background="#ff2a156f";
+    
+    return;
+}
+//Get public URL of the uploaded image
+const {data: publicUrlData, error: publicUrlerror}= client.storage.from('image').getPublicUrl(filepath);
+
+if(publicUrlerror){
+    console.error("public Url Data : ", publicUrlerror.message);
+    alert('Failed to retrieve image URL.');
+}
+const imageUrl = publicUrlData.publicUrl;
+
+//Insert image record into the database
+const{data: insertData,error:insertError}= await client.from('Gallery').insert([{title:title, image_url:imageUrl}]);
+
+if(insertError){console.error('Database insert error.',insertError.message);
+alert('Failed to save image information.');
+statusText.textContent="Upload failed";
+ statusText.style.color='Red';
+return;
+}
+
+
+//Clear inputs
+fileInput.value = "";
+titleInput.value="";
+fileName.value="";
+
+statusText.textContent="Done";
+ statusText.style.color='green';
+    
+}
+
+
+
+
+function updateFileName() {
+  const fileInput = document.getElementById('fileInput');
+  const fileNameSpan = document.getElementById('fileName');
+  
+  if (fileInput.files.length > 0) {
+    fileNameSpan.textContent = fileInput.files[0].name;
+  } else {
+    fileNameSpan.textContent = 'No file chosen';
+  }
+}
+
+
+
+async function fetchGallery() {
+showSpinner();
+  const galleryDiv = document.getElementById('gallery');
+  
+  try {
+    const { data: images, error } = await client
+      .from('Gallery')
+      .select('*')
+      .order('id', { ascending: false });
+
+    if (error) {
+      throw new Error(`Supabase Error: ${error.message}`);
+    }
+
+    galleryDiv.innerHTML = '';
+    
+    if (images.length === 0) {
+      galleryDiv.innerHTML = '<p>No images found in gallery</p>';
+      return;
+    }
+
+    // In fetchGallery() function
+images.forEach(image => {
+    const container = document.createElement('div');
+    container.style.position = 'relative';
+    container.style.display = 'inline-block';
+    container.style.margin = '10px';
+    
+
+    // Image element
+    const imgElement = document.createElement('img');
+    imgElement.src = image.image_url;
+    imgElement.style.width = '150px';
+    imgElement.style.background = '#eaffff';
+    
+
+    // Delete button
+    const deleteBtn = document.createElement('button');
+    deleteBtn.innerHTML = 'Delete';
+    deleteBtn.style.position = 'absolute';
+    deleteBtn.style.top = '5';
+    deleteBtn.style.right = '0';
+    deleteBtn.style.background = 'red';
+    deleteBtn.style.color = 'white';
+    deleteBtn.style.border = 'none';
+    deleteBtn.style.borderRadius = '50px';
+    deleteBtn.style.cursor = 'pointer';
+    
+    // Set data attributes for deletion
+    deleteBtn.dataset.id = image.id;
+    deleteBtn.dataset.filepath = image.image_url.split('/object/public/image/')[1];
+
+    deleteBtn.addEventListener('click', async (e) => {
+        if(confirm('Are you sure you want to delete this image?')) {
+            await deleteImage(e.target.dataset.id, e.target.dataset.filepath);
+        }
+    });
+
+    container.appendChild(imgElement);
+    container.appendChild(deleteBtn);
+    galleryDiv.appendChild(container);
+});
+    
+  } catch (error) {
+    console.error('Full Error:', JSON.stringify(error, null, 2));
+    galleryDiv.innerHTML = `<p style="color: red">Error: ${error.message}</p>`;
+  } finally {
+    hideSpinner();
+  }
+}
+
+window.onload = auth;
+
+function hideSpinner() {
+    document.getElementById('spinner').style.display='none';
+}
+function showSpinner() {
+    document.getElementById('spinner').style.display='flex';
+}
+
+
+const UserName="admin001";
+const password ="adminlock001."
+
+const uploadSection = document.getElementById('uploadSection');
+
+const errormessage = document.getElementById('errormessage');
+
+const authSection = document.getElementById('authSection');
+
+const User = document.getElementById('authUser');
+
+const Lock= document.getElementById('authLock');
+
+const authUser = User.value.trim();
+const authLock = Lock.value.trim();
+
+
+function auth(){
+    if (User.value == UserName & Lock.value == password){
+        uploadSection.style.display ='block';
+        authSection.style.display='none';
+        fetchGallery();
+    }
+    else if (User.value != UserName || Lock.value != password){
+        errormessage.textContent='password or username is incorrect.';
+     }
+     else if (User.value == ''|| Lock.value == ''){
+         errormessage.textContent='';
+     }
+}
+
+
+
+async function deleteImage(id, filePath) {
+    showSpinner();
+    try {
+        // Delete from database
+        const { error: dbError } = await client
+            .from('Gallery')
+            .delete()
+            .eq('id', id);
+
+        if (dbError) throw dbError;
+
+        // Delete from storage
+        const { error: storageError } = await client.storage
+            .from('image')
+            .remove([filePath]);
+
+        if (storageError) throw storageError;
+
+        // Refresh gallery
+        await fetchGallery();
+    } catch (error) {
+        console.error('Delete Error:', error);
+        alert(`Delete failed: ${error.message}`);
+    } finally {
+        hideSpinner();
+    }
+}
+ </script>
+ 
+    </body>
+</html>

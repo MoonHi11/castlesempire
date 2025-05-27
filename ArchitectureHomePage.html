@@ -1,0 +1,420 @@
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+        <title>Home</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+        <style>
+            *{
+				box-sizing:border-box;
+			}
+			html , body{
+				border:0px;
+				margin:0px;
+                background-color: whitesmoke;
+			}
+            .middle-containerDivs:hover h4{
+				color: black;
+                padding:10px;
+				font: bold 20px "palatino-linotype";
+				text-align:left;
+			}
+			#middleImage{
+			    border-radius: 35px;
+			}
+            .middle-containerDivs h4{
+				background: rgb(219, 250, 219);
+				color:black;
+				font: bold 18px Arial, Helvetica, sans-serif;
+				font: bold  georgia;
+				text-align:left;
+				padding:10px;
+				border-radius: 10px;
+				transition:.7s;
+
+			}
+            .middle-containerDivs{
+				background: ghostwhite;
+				color:black;
+				grid-row: 2;
+				margin:-15 auto;
+				min-width:55%;
+                max-width: 57%;
+				text-align:center;
+				border-radius:10px;
+				box-shadow:8px 3px 7px gray;
+				transition:0.3s;
+			}
+            .middle-containerDivs:hover{
+				background:whitesmoke ;
+				color:black;
+				font: bold 15px "palatino-linotype";
+				width:60%;
+				box-shadow:2px 4px 10px black;
+				padding: 0px,0px,0px,20px;
+                justify-content: flex-start;  
+			} 
+            
+            .middle-container{
+				background: ghostwhite;
+				color:black ;
+				padding-top:100px ;
+				font: bold 0px Arial, Helvetica, sans-serif;
+				margin:0 auto;
+				width:14%;
+				min-width: 80px;
+				max-width: 80px;
+				padding: 0px;
+				text-align:center;
+				border-radius:50px;
+				box-shadow:10px 5px 8px gray;
+				transition:0.3s;
+				border: white;
+			}
+			.middle-container:hover{
+				background:rgb(219, 250, 219) ;
+				color:black;
+				font: bold 15px Arial, Helvetica, sans-serif;
+				width:50%;
+				padding: 10px;
+				max-width: 300px;
+                
+				box-shadow:10px 10px 20px black;
+				padding: 0px,0px,0px,20px;
+                justify-content: flex-start;  
+			} 
+			
+            .middle-container:hover h4{
+				color: black;
+                padding:10px;
+				font: bold 20px Arial, Helvetica, sans-serif;
+				text-align:left;
+                border-radius: 10%;
+			}
+            .middle-container h4{
+				background: black;
+				color:black;
+				font: bold 18px "palatino-linotype";
+				font: bold  georgia;
+				text-align:left;
+				padding:10px;
+				border-radius: 10%;
+				transition:.7s;
+
+			}
+            .middle-container .spans{
+				
+				font:0px bold;
+				padding: 0%;
+				color: black;
+				text-decoration:none;
+				transition: .5s;
+			}
+            .middle-container .spans:hover{
+                color: black;
+                font:20px bold;
+				text-decoration:none;
+				transition: .3s;
+            }
+            .middle-container  .logoItems{
+				
+				font-family:  Arial, Helvetica, sans-serif;
+				
+			}
+			.middle-container:focus .logoItems{
+				color:black;
+				padding: 100ex;;
+				font-family:Arial, Helvetica, sans-serif;
+				font:18px bold;
+            }
+            .middle-container > img{
+				width: 80px;
+                height: 80px;
+				
+                padding: 0px;
+				transition-duration:.3s ;
+			}
+            .middle-container:hover> img{
+				width: 150px;
+                height: 150px;
+				transition-duration:.3s ;
+			}
+            .h2{
+                text-align: start;
+				font: bold 30px Arial, Helvetica, sans-serif;
+				left: 10px;
+                margin-left: 7;
+            }
+			
+			.h22{
+                font-family:'Courier New', Courier, monospace;
+                font-size: 40px;
+                text-align: center;
+                vertical-align: 10%;
+            }
+			
+            .displayimage{
+			background:center local content-box no-repeat url("https://wljyuchpddhobtvkitgs.supabase.co/storage/v1/object/public/image/public/1747764224647_webpage.jpg");
+            height: 90%;
+            width: 100%;
+            background-color:whitesmoke;
+            }
+            .displayimage h2{
+                margin: 0 auto;
+                padding-top: 25%;
+                color: rgb(219, 250, 219);
+                text-align: center;
+                font-family: 'Courier New', Courier, monospace;
+            }
+            .p{
+                text-align: center;
+                font-size: small;
+                color:honeydew;
+                font-family: Arial, Helvetica, sans-serif;
+            }
+            .button{
+                position:static;
+                top: auto;
+                background-color: black;
+                color: black;
+                font-weight: bold;
+                background-color: rgb(219, 250, 219);
+                border-radius: 10px;
+               padding: 3%,0%,3%,0%;
+                min-height: 8%;
+                margin: 10px;
+                max-height: 10%;
+                border: none;
+            }
+             .button a {
+                 color:black;
+             }
+            .h1{
+                font-family:'Courier New', Courier, monospace;
+                font-size: 40px;
+                color: white;
+                text-align: start;
+                vertical-align: 10%;
+            }
+            #headSpan{
+                color:rgb(219, 250, 219);
+                font-size:30px;
+                font-family:cursive;
+            }
+            a{
+				text-decoration: none;
+				font-size: 15px;
+				color: white;
+			}
+			.dropdown{
+                position: sticky;
+                top:0;
+                right: 10;
+                align-items: center;
+                display: none;
+            }
+            .dropdown button{
+                color: rgb(219, 250, 219);
+                background-color: transparent;
+                max-width: 100px;
+                max-height: 100px;
+                display:flexbox;
+            }
+            .Gallery {
+                color: rgb(183, 255, 183);
+                font-size:40px;
+                background-color: transparent;
+                max-width: 100px;
+                font-weight: bold;
+                font-size: large;
+                max-height: 100px;
+                right: 10;
+                border-color:transparent ;
+                position: fixed;
+                top:10;
+            }
+            .abouth3{
+                text-align: start;
+                margin-left: 7;
+                font-size: 25px;
+                color: black;
+				font-family:Arial, Helvetica, sans-serif;
+            }
+            .about-container > img{
+				width: 100px;
+                height: 100px;
+				transition-duration:.5s ;
+			}
+            .about-container h4{
+				background: transparent;
+				color:black;
+				font: bold 20px "palatino-linotype";
+				font: bold  georgia;
+				text-align:center;
+				padding:10px;
+                margin: 3 auto;
+				border-top-right-radius:10px;
+				border-top-left-radius:10px;
+				transition:1s;
+				font-family: Arial, Helvetica, sans-serif
+			}
+			.about-container:hover h4{
+				background: black;
+                padding:10px;
+                color: white;
+				font: bold 20px "palatino-linotype";
+				text-align:left;
+			}
+            .about-container p{
+				color:black;
+				font:0px bold;
+				text-decoration:none;
+				transition: .5s;
+			}
+			.about-container:hover p{
+				color:black;
+				padding: auto;
+				font:16px bold;
+				font-family: cursive;
+			}
+            .about-container{
+				background: transparent;
+				color:lightblue ;
+				font: bold 0px "palatino-linotype";
+				margin: -20 auto;
+				width: 160px;
+                
+				text-align:center;
+				border-radius:10px;
+				transition:0.3s;
+			}
+			.about-container:hover{
+				background:rgb(219, 250, 219) ;
+				
+				font: bold 15px "palatino-linotype";
+				width: 60%;
+				box-shadow:2px 2px 5px lightgray;
+				padding: 10px,10px,10px,20px;
+			}
+            .contacth3{
+                font-weight:bold ;
+                font-size: 25px;
+                margin-left: 7px;
+				font-family:Arial, Helvetica, sans-serif;
+			}
+			.contactButton{
+				padding: 15px;
+				font-size:50px;
+				color: rgb(71, 70, 70);
+				border: transparent;
+                margin: 10;
+				border-radius:10px ;
+			}
+            .Contact{
+				background: transparent;
+				
+				padding-top:100px ;
+				font: bold 0px Arial, Helvetica, sans-serif;
+				margin:5 auto;
+				width:14%;
+				min-width: 45%;
+				max-width: 50%;
+				padding: 0px;
+				text-align:center;
+				border-radius:50px;
+				
+				transition:0.3s;
+				border: white;
+			}
+			.contactA{
+				text-decoration: none;
+				color:  rgb(71, 70, 70);;
+			}
+            .displayimage a{
+                color: rgb(183, 255, 183);
+            }
+            i{
+                font-size:25px
+            }
+        </style>
+    </head>
+    <body>
+        
+        <div class="displayimage">
+            <h1 class="h1">Castl<span id="headSpan">Empire</span> </h1> <button class="Gallery" ><a href="starLightGallery.html"><i class="fas fa-images"></i></a></button>
+            <div class="dropdown" id="dropdown">
+                <button class="button"><a href="ArchitecturalWebPage.html">Home</a></button>
+                <button class="button"><a href="ArchitectureAboutpage.html">Aboutpage</a></button>
+            </div>
+
+            <h2>
+                "Transforming ideas into Living Spaces"
+                
+            </h2>
+            <p class="p">Expert architecture solutions in 2D, 3D, interior design & Supervision</p>
+            
+                
+            </div>
+            <button class="button"><a href="https://wa.me/+2349060101782">
+                Get a free consultation</a>
+            </button>
+            
+            <div class="middle-container">
+                <img id="middleImage" src="https://wljyuchpddhobtvkitgs.supabase.co/storage/v1/object/public/image/file_00000000ad6461f4ab2f564a601ea572.png">
+                <h3>Profile</h3>
+                <p class="logoItems">Company : <span>Castle Empire</span></p>
+                <p class="logoItems">Founded : <span >2018</span></p>
+                <p class="logoItems">Location : <span>Ilorin , Kwara State.</span></p>
+                
+            </div>
+            <div class="griding">
+                <h2 class="h2">Servises</h2>
+                
+                <div class="middle-containerDivs"><h4>3D Designs</h4> <p class="spans">Realistic reandering to bring your Vision to life .</p></div>
+                <div class="middle-containerDivs"><h4>Supervision / Site Management</h4><p class="spans">Professional oversight to ensure your project meets design specs and timlines.</p></div>
+                <div class="middle-containerDivs"><h4>Interior Design</h4><p class="spans">Funtional and elegant space planning for homes and busssinesses.</p></div>
+                <div class="middle-containerDivs"><h4>Landscape Design</h4><p class="spans">Outdoor space aesthetics and environment harmony.</p></div>
+                <div class="middle-containerDivs"><h4>Consultation Service</h4><p class="spans">Expert advise from design to finish. </p></div>
+            
+            </div>
+            <div>
+                <div>
+                    <h3 class="abouth3"> About us </h3>
+                    <div class="about-container">
+                        <h4>Who we are <span><i class="fas fa-sort-desc"></i></span></h4>
+                        <p>Founded in 2018, StarLights is o full servise architecture firm delivering innovative and client-focused design solution. We specialized in creating timeless and funtional space tailored to your vision.</p>
+        
+                    </div>
+                    <div class="about-container">
+                        <h4>Mission <span><i class="fas fa-sort-desc"></i></span></h4>
+                        <p>To desing space that blend creating funtionality and sustainability.</p>
+        
+                    </div>
+                    
+                    <div class="about-container">
+                        <h4>Vision <span><i class="fas fa-sort-desc"></i></span></h4>
+                        <p>To be a leading force in redefining modern Architecture in "Nigeria".</p>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="contacth3">Contact us</h3>
+
+		            <div class="Contact">
+                    <button class="contactButton" style="background-color: #ffdee3;"><a><i class="fab fa-google"></i></a></button>
+                    <button class="contactButton" style="background-color: rgb(189, 240, 223);"><a href="https://wa.me/+2349060101782"><i class="fab fa-whatsapp"></i></a></button>
+                    <button class="contactButton" style="background-color: #5597ff7e;"><a><i class="fab fa-linkedin" style="fontsize:25px; color:#3b5998"></i></a></button>
+                
+                    </div>
+                </div>
+        <script>
+             function dropdowns(){
+                document.getElementById('dropdown').style.display = 'flexbox';
+             }
+        </script>
+            
+            
+        
+        
+    </body>
+</html>
