@@ -1,0 +1,92 @@
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>
+            Gallery
+        </title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<!-- Add to your HTML head -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fslightbox/3.4.1/index.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fslightbox/3.4.1/index.min.js"></script>
+
+<!-- Modify image anchor -->
+<!-- <a href="image_url" data-lightbox="gallery" data-title="image_title"> -->
+        <style>
+            
+            @keyframes spin {
+  to { 
+  transform: rotate(360deg);
+   }
+}
+
+.spinner {
+  position: fixed;
+  top: 49%;
+  left: 42%;
+  width: 50px;
+  height: 50px;
+  border: 6px solid #ccc;
+  border-top-color: rgb(219, 250, 219);;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  z-index: 1000;
+  display:flexbox
+}
+h3{
+    bold
+}
+.navbar{
+    display:flex;
+   
+}
+a{
+position:relative;
+display:inline-block;
+}
+#a{
+    position: absolute;
+    right:10;
+    top:25;
+    color:black;
+}
+
+
+/* Add to your CSS */
+.fslightbox-toolbar-button {
+    background: rgba(0,0,0,0.5) !important;
+}
+
+.fslightbox-container {
+    background: rgba(0,0,0,0.9) !important;
+}
+
+        </style>
+    </head>
+    <body>
+        <!-- transform: translate(-50%, -50%);-->
+        <div class="navbar">
+            <h3>
+            Gallery
+        </h3>
+        <a id ="a" href="ArchitectureGallery.html"><i class="fas fa-upload"></i></a>
+        </div>
+        
+        <div id="spinner" class="spinner hidden"></div>
+
+<div id="gallery"></div>
+
+  
+ 
+
+
+
+      <!-- <button onclick="fetchGallery()">Fetch</button>-->
+        <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+
+        </script>
+        <script src="server.js">
+
+        </script>
+        
+    </body>
+</html>
