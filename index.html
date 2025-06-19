@@ -1,10 +1,84 @@
 <html>
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-
+        
         <title>Home</title>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap"/>
         <style>
+                   @keyframes animation {
+            0%{
+                transform:translateX(30px) scale(0.9)
+            }
+            50%{
+                transform:translateX(0px,0px) scale(1.2);
+                box-shadow:0 0 12px red, 0 0 20px 10px #bfffff;
+            }
+            100%{
+                transform:translateX(-30px) scale(0.9)
+            }
+        }
+        @keyframes boxDesign{
+            0%, 100%{
+                box-shadow:0 0 12px #b4942d;
+            }
+            50%{
+                box-shadow:0 0 12px #b4942d, 0 0 2px 3px #c1b9a1 inset;
+            }
+        }
+        @keyframes shadows{
+            0%{
+                text-shadow:5px 5px 18px #b4942d;
+            }
+            50%{
+                text-shadow:-10px -5px 15px #b4942d;
+            }
+            100%{
+                text-shadow:5px 5px 12px #b4942d;
+            }
+        }
+        @keyframes displayAfter{
+            0%{
+             text-shadow:5px 5px 18px #b4942d;
+                top: -10%;
+            }
+            50%{
+                text-shadow:-10px -5px 15px #b4942d;
+                top: 5%;
+            }
+            100%{
+                text-shadow:5px 5px 12px #b4942d;
+                top: 0%;
+            }
+        }
+        @keyframes gallery {
+            0%{
+             m bottom: -10%;
+            }
+            50%{
+                
+                bottom: 5%;
+            }
+            100%{
+                
+                bottom: 0%;
+            }
+        }
+        @keyframes floating{
+            0%{
+                width: 0;
+                Color:#ffe71557;
+            }
+            80%{
+                width: 50%;
+                Color: transparent;
+            }
+            100%{
+                width: 80%;
+                Color:#101010a8;
+            }
+        }
+        
             *{
 				box-sizing:border-box;
 			}
@@ -15,45 +89,44 @@
 			}
             .middle-containerDivs:hover h4{
 				color: black;
-                padding:10px;
 				font: bold 20px "palatino-linotype";
-				text-align:left;
 			}
 			#middleImage{
 			    border-radius: 35px;
-			}
+			    			}
+			
             .middle-containerDivs h4{
-				background: rgb(219, 250, 219);
+				background: linear-gradient(45deg, #d2be58d7,#dcd393,#988319);
 				color:black;
 				font: bold 18px Arial, Helvetica, sans-serif;
-				font: bold  georgia;
 				text-align:left;
 				padding:10px;
 				border-radius: 10px;
 				transition:.7s;
-
+      margin:0;
 			}
             .middle-containerDivs{
 				background: ghostwhite;
 				color:black;
-				grid-row: 2;
-				margin:-15 auto;
-				min-width:55%;
-                max-width: 57%;
+				top: 50%;
+				left: 50%;
+				margin-left: 10px;
+				width: 50vh;
 				text-align:center;
 				border-radius:10px;
-				box-shadow:8px 3px 7px gray;
 				transition:0.3s;
 			}
+			 
             .middle-containerDivs:hover{
 				background:whitesmoke ;
 				color:black;
 				font: bold 15px "palatino-linotype";
 				width:60%;
-				box-shadow:2px 4px 10px black;
+				box-shadow:0px 0px 10px black inset;
 				padding: 0px,0px,0px,20px;
-                justify-content: flex-start;  
-			} 
+    justify-content: center;  
+			
+			}
             
             .middle-container{
 				background: ghostwhite;
@@ -61,27 +134,27 @@
 				padding-top:100px ;
 				font: bold 0px Arial, Helvetica, sans-serif;
 				margin:0 auto;
-				width:14%;
-				min-width: 80px;
-				max-width: 80px;
+				width:80px;		
 				padding: 0px;
 				text-align:center;
 				border-radius:50px;
-				box-shadow:10px 5px 8px gray;
+				box-shadow:5px 5px 8px gray inset;
 				transition:0.3s;
 				border: white;
-			}
+				
+			   }
+			 
 			.middle-container:hover{
-				background:rgb(219, 250, 219) ;
+				background:white;
 				color:black;
 				font: bold 15px Arial, Helvetica, sans-serif;
 				width:50%;
 				padding: 10px;
 				max-width: 300px;
-                
-				box-shadow:10px 10px 20px black;
+				animation: 3.2s boxDesign linear infinite alternate;
 				padding: 0px,0px,0px,20px;
-                justify-content: flex-start;  
+      justify-content: center;  
+      clip-path:600px;
 			} 
 			
             .middle-container:hover h4{
@@ -121,12 +194,7 @@
 				font-family:  Arial, Helvetica, sans-serif;
 				
 			}
-			.middle-container:focus .logoItems{
-				color:black;
-				padding: 100ex;;
-				font-family:Arial, Helvetica, sans-serif;
-				font:18px bold;
-            }
+		
             .middle-container > img{
 				width: 80px;
                 height: 80px;
@@ -134,15 +202,21 @@
                 padding: 0px;
 				transition-duration:.3s ;
 			}
-            .middle-container:hover> img{
+            .middle-container:hover > img{
 				width: 150px;
                 height: 150px;
 				transition-duration:.3s ;
 			}
+			.griding{
+			    display:block;
+			    gap:20px;
+			}
+			
             .h2{
                 text-align: start;
 				font: bold 30px Arial, Helvetica, sans-serif;
 				left: 10px;
+				display:block;
                 margin-left: 7;
             }
 			
@@ -154,36 +228,88 @@
             }
 			
             .displayimage{
-			background:center local content-box no-repeat url("https://wljyuchpddhobtvkitgs.supabase.co/storage/v1/object/public/image/public/1747764224647_webpage.jpg");
+			background: no-repeat url("https://wljyuchpddhobtvkitgs.supabase.co/storage/v1/object/public/image/house.png") center center;
+			       object-fit:contain;
             height: 90%;
-            width: 100%;
-            background-color:whitesmoke;
+            background-color:linear-gradient(rgba(0,0,0,.3),rgba(0,0,0,0));
+            background-size: cover;
+            color: var(--clr);
+            border-right:8px solid var(--clr);
+            -webkit-text-stroke:1px var(--clr);
             }
-            .displayimage h2{
-                margin: 0 auto;
-                padding-top: 25%;
-                color: rgb(219, 250, 219);
-                text-align: center;
-                font-family: 'Courier New', Courier, monospace;
-            }
-            .p{
-                text-align: center;
-                font-size: small;
-                color:honeydew;
+                   
+            .displayimage::after{
+            content:"CastleEmpire";
+            left: 15%;
+            top: 0%;
+            opacity:.7;
+            font-family:'orbitron' ,san-serif;
+            color: var(--clr);
+            -webkit-text-stroke:1px var(--clr);
+            border-right:8px solid var(--clr);
+            width: 0;
+            font-size:2.5em;
+            text-shadow:-10px -5px 15px #b4942d;
+            font-weight:800;
+            animation :2.5s displayAfter linear  alternate;
+            position: absolute;
+            
+        }
+        .display:hover:after {
+            width: 80%;
+            color :#ceff55;
+        }
+            .pp{
+                font-size: 1.3em;
+                width: 80%;
+                text-align:center;
+                font-weight:700;
+                color:#9c8d0d;
                 font-family: Arial, Helvetica, sans-serif;
+                top: 50%;
+                left:50%;
+                transform:translate(-50%, -50%);
+                position: absolute;                
             }
+            .pp .slogan{
+                  color: transparent ;
+            -webkit-text-stroke:1px rgba(255,255,255,0);
+           
+            }
+            .pp .slogan::before{
+            content:attr(data-text);
+            position: absolute;
+            border-right:8px solid var(--clr);
+            width: 80%;
+            font-style:italic;
+            font-family:Arial, Helvetica, sans-serif;
+            
+            transition:.4s;
+            overflow: hidden;
+            color: #4a3a00;
+            -webkit-text-stroke:1px var(--clr);
+            animation: 2s floating linear alternate;
+            }
+            .pp .p{
+            color: #4a3a00;
+            font-size: small;
+             }
             .button{
                 position:static;
-                top: auto;
-                background-color: black;
+                box-shadow:0 0 15px #b4942d;
+                position: relative;
+                left: 50%;
+                         transform :translate(-50%,-75%);
+                display:block;
+                
                 color: black;
                 font-weight: bold;
-                background-color: rgb(219, 250, 219);
+                background: linear-gradient(45deg, #d2be58d7,#dcd393,#988319);
                 border-radius: 10px;
                padding: 3%,0%,3%,0%;
-                min-height: 8%;
+                width: 200px;
                 margin: 10px;
-                max-height: 10%;
+                height: 50px;
                 border: none;
             }
              .button a {
@@ -204,7 +330,7 @@
             a{
 				text-decoration: none;
 				font-size: 15px;
-				color: white;
+		
 			}
 			.dropdown{
                 position: sticky;
@@ -220,18 +346,27 @@
                 max-height: 100px;
                 display:flexbox;
             }
-            .Gallery {
-                color: rgb(183, 255, 183);
-                font-size:40px;
+             .Gallery {
+                color: #b4942d;
                 background-color: transparent;
-                max-width: 100px;
-                font-weight: bold;
-                font-size: large;
+                max-width: 120px;
                 max-height: 100px;
-                right: 10;
+                bottom:0%;
+                backdrop-filter:blur(1px);
+                border-radius: 20px 0px;                
+                border:.5px solid rgba(255,255,255,0.4);
+                
+                animation: 3s gallery;
+                padding:7px;
+            }
+            .Gallery .gg{
+                color: #b4942d;
+                
+                font-size:17px;
+                font-weight:800;
+                background-color: transparent;
                 border-color:transparent ;
-                position: fixed;
-                top:10;
+                
             }
             .abouth3{
                 text-align: start;
@@ -240,11 +375,7 @@
                 color: black;
 				font-family:Arial, Helvetica, sans-serif;
             }
-            .about-container > img{
-				width: 100px;
-                height: 100px;
-				transition-duration:.5s ;
-			}
+           
             .about-container h4{
 				background: transparent;
 				color:black;
@@ -255,13 +386,13 @@
                 margin: 3 auto;
 				border-top-right-radius:10px;
 				border-top-left-radius:10px;
-				transition:1s;
+				transition:.3s;
 				font-family: Arial, Helvetica, sans-serif
 			}
 			.about-container:hover h4{
-				background: black;
+			background: transparent;
                 padding:10px;
-                color: white;
+                color: black;
 				font: bold 20px "palatino-linotype";
 				text-align:left;
 			}
@@ -269,13 +400,15 @@
 				color:black;
 				font:0px bold;
 				text-decoration:none;
-				transition: .5s;
+				transition: 0s;
 			}
 			.about-container:hover p{
 				color:black;
-				padding: auto;
+				padding: 10px;
 				font:16px bold;
-				font-family: cursive;
+				
+				transition: .5s;
+			font-family:Arial, Helvetica, sans-serif;
 			}
             .about-container{
 				background: transparent;
@@ -286,14 +419,15 @@
                 
 				text-align:center;
 				border-radius:10px;
-				transition:0.3s;
+				transition:0.5s;
 			}
 			.about-container:hover{
-				background:rgb(219, 250, 219) ;
-				
+				background: white ;
+				position: relative;
+				margin-top:10px;
 				font: bold 15px "palatino-linotype";
 				width: 60%;
-				box-shadow:2px 2px 5px lightgray;
+				animation:6s boxDesign linear infinite alternate;
 				padding: 10px,10px,10px,20px;
 			}
             .contacth3{
@@ -336,23 +470,45 @@
             i{
                 font-size:25px
             }
+            footer{
+                text-align:center;
+                background:white;
+                color: gray;
+                padding:8px;
+            }
+            @media(min-width:768px){
+			    .griding{
+			    display:flex;
+			    gap:20px;
+			    flex-wrap:wrap;
+			}
+			.middle-containerDivs{
+			    flex:1;
+			    flex-grow:1;
+			    flex-basis:150;
+			}
+			  .displayimage::after{
+            left: 40%;
+            top: 0%;
+            opacity:.7;
+            position: absolute;
+            transform: translate(-50%, -0%)
+        }
+			}
         </style>
     </head>
     <body>
         
         <div class="displayimage">
-            <h1 class="h1">Castl<span id="headSpan">Empire</span> </h1> <button class="Gallery" ><a href="gallery.html"><i class="fas fa-images"></i></a></button>
-            <div class="dropdown" id="dropdown">
-                <button class="button"><a href="ArchitecturalWebPage.html">Home</a></button>
-                <button class="button"><a href="ArchitectureAboutpage.html">Aboutpage</a></button>
-            </div>
-
-            <h2>
-                "Transforming ideas into Living Spaces"
-                
-            </h2>
-            <p class="p">Expert architecture solutions in 2D, 3D, interior design & Supervision</p>
             
+            
+            
+            
+           <div class="pp">
+               <p class="slogan" data-text="&nbsp;TRANSFORMING IDEAs INTO LIVING SPACE">&nbsp;TRANSFORMING IDEAs INTO LIVING SPACE &nbsp;</p>
+            <p class="p">Expert architecture solutions in 2D, 3D, interior design & Supervision</p>  
+            <button class="Gallery" ><a href="gallery.html" class="gg">Visit Gallery   <span><i class="fas fa-arrow-right"></i></span></a></button>
+            </div> 
                 
             </div>
             <button class="button"><a href="https://wa.me/+2349060101782">
@@ -367,11 +523,11 @@
                 <p class="logoItems">Location : <span>Ilorin , Kwara State.</span></p>
                 
             </div>
-            <div class="griding">
+          
                 <h2 class="h2">Servises</h2>
-                
+            <div class="griding">
                 <div class="middle-containerDivs"><h4>3D Designs</h4> <p class="spans">Realistic reandering to bring your Vision to life .</p></div>
-                <div class="middle-containerDivs"><h4>Supervision / Site Management</h4><p class="spans">Professional oversight to ensure your project meets design specs and timlines.</p></div>
+                <div class="middle-containerDivs"><h4>Supervision / Site Management</h4><p class="spans">Professional oversight to ensure your project meets design specs and timeliness.</p></div>
                 <div class="middle-containerDivs"><h4>Interior Design</h4><p class="spans">Funtional and elegant space planning for homes and busssinesses.</p></div>
                 <div class="middle-containerDivs"><h4>Landscape Design</h4><p class="spans">Outdoor space aesthetics and environment harmony.</p></div>
                 <div class="middle-containerDivs"><h4>Consultation Service</h4><p class="spans">Expert advise from design to finish. </p></div>
@@ -417,4 +573,7 @@
         
         
     </body>
+    <footer>
+        <div>2025 Copyright. By <strong>Moonhill</strong> </label></div>
+    </footer>
 </html>
