@@ -898,8 +898,14 @@
                         
                         <div class="form-group">
                             <label for="projectType">Project Type</label>
-                            <input type="text" id="projectType" placeholder="Residential, Commercial, etc." required>
+                                                    <input list="buildings"  type="text" id="projectType" placeholder="Residential, Commercial, etc." required>
                         </div>
+                        <datalist id="buildings">
+                            <option value="Residential"></option>
+                             <option value="Commercial"></option>
+                              <option value="Industrial"></option>
+                               <option value="Consultation"></option>
+                        </datalist>
                         
                         <div class="form-group">
                             <label for="message">Project Details</label>
