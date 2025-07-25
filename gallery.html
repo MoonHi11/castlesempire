@@ -9,6 +9,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fslightbox/3.4.1/index.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+  // Remove .html extension from URLs
+  if (window.location.pathname.endsWith('.html')) {
+    const cleanUrl = window.location.pathname.slice(0, -5);
+    history.replaceState(null, null, cleanUrl);
+  }
+        </script>
     <style>
         :root {
             --gold: #D4AF37;
