@@ -8,6 +8,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;600;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
        <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+   <script>
+  // Remove .html extension from URLs
+  if (window.location.pathname.endsWith('.html')) {
+    const cleanUrl = window.location.pathname.slice(0, -5);
+    history.replaceState(null, null, cleanUrl);
+  }
+           </script>
     <script>
         // Initialize EmailJS with your user ID
         emailjs.init('QG8Jkrc4oUHGhNOxB');
@@ -728,7 +735,7 @@
                 <h1> Transforming Ideas Into Living Space</h1>
                 <p>Castle Empire blends timeless elegance with cutting-edge innovation to create structures that define skylines and inspire generations.</p>
                 <div class="hero-buttons">
-                    <button class="hero-button primary-btn" ><a href="gallery.html" style="color:black;text-decoration:none;" >Explore Projects</a></button>
+                    <button class="hero-button primary-btn" ><a href="/gallery" style="color:black;text-decoration:none;" >Explore Projects</a></button>
                     <button class="hero-button secondary-btn">Book Consultation</button>
                 </div>
             </div>
