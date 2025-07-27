@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Castle Empire Gallery</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fslightbox/3.4.1/index.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fslightbox/3.4.1/index.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+  // Remove .html extension from URLs
+  if (window.location.pathname.endsWith('.html')) {
+    const cleanUrl = window.location.pathname.slice(0, -5);
+    history.replaceState(null, null, cleanUrl);
+  }
+        </script>
+    <style>
+        :root {
+            --gold: #D4AF37;
+            --gold-light: rgba(212, 175, 55, 0.1);
+            --gold-lighter: rgba(212, 175, 55, 0.05);
+            --gold-gradient: linear-gradient(135deg, #D4AF37 0%, #FFD700 50%, #D4AF37 100%);
+            --white: #FFFFFF;
+            --off-white: #F9F9F9;
+            --light-gray: #F5F5F5;
+            --dark: #0A0A0A;
+            --gray: #888;
+            --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Raleway', sans-serif;
+            background-color: var(--off-white);
+            color: var(--dark);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+        
+        h1, h2, h3, h4, h5 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+        }
+        
+        /* Header */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .navbar h1 {
+            font-size: 2.2rem;
+            background: var(--gold-gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 1px;
+        }
+        
+        .upload-btn {
+            background: var(--gold);
+            color: var(--white);
+            border: none;
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+            text-decoration:none;
+        }
+        
+        .upload-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(212, 175, 55, 0.4);
+            background: linear-gradient(135deg, #c19e30 0%, #e6c200 50%, #c19e30 100%);
+        }
+        
+        /* Gallery Container */
+        .gallery-container {
+            max-width: 1400px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        
+        .gallery-header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding: 0 20px;
+        }
+        
+        .gallery-header h2 {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .gallery-header h2:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: var(--gold);
+        }
+        
+        .gallery-header p {
+            max-width: 700px;
+            margin: 30px auto 0;
+            font-size: 1.2rem;
+            color: #555;
+        }
+        
+        /* Category Filter */
+        .category-filter {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin: 0 auto 40px;
+            padding: 0 20px;
+            max-width: 900px;
+        }
+        
+        .category-option {
+            display: none;
+        }
+        
+        .category-label {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: var(--white);
+            border: 1px solid var(--gold-light);
+            border-radius: 30px;
+            color: #555;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .category-label:hover {
+            background-color: var(--gold-lighter);
+            border-color: var(--gold);
+            color: var(--dark);
+        }
+        
+        .category-option:checked + .category-label {
+            background: var(--gold);
+            color: var(--white);
+            border-color: var(--gold);
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+        }
+        
+        /* Gallery Grid */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+            padding: 0 20px;
+        }
+        
+        .gallery-item {
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            transition: var(--transition);
+            background: var(--white);
+            aspect-ratio: 4/3;
+            transform: translateY(0);
+        }
+        
+        .gallery-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(212, 175, 55, 0.2);
+        }
+        
+        .gallery-item:hover .item-overlay {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .gallery-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: var(--transition);
+        }
+        
+        .item-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 25px;
+            background: linear-gradient(0deg, rgba(0,0,0,0.8) 0%, transparent 100%);
+            color: var(--white);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: var(--transition);
+        }
+        
+        .item-title {
+            font-size: 1.3rem;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        
+        .item-date {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .item-category {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(0, 0, 0, 0.7);
+            color: var(--gold);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        /* Spinner */
+        @keyframes spin {
+            to { 
+                transform: rotate(360deg);
+            }
+        }
+        
+        .spinner {
+            position: fixed;
+            top: 49%;
+            left: 42%;
+            width: 50px;
+            height: 50px;
+            border: 3px dashed var(--gold-lighter);
+            
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            z-index: 1000;
+            display:flexbox;
+            border-top: 4px dashed var(--gold);
+            
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 80px 20px;
+            grid-column: 1 / -1;
+        }
+        
+        .empty-state i {
+            font-size: 4rem;
+            color: var(--gold);
+            margin-bottom: 20px;
+            opacity: 0.7;
+        }
+        
+        .empty-state h3 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: #444;
+        }
+        
+        .empty-state p {
+            color: #777;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        /* Decorative Elements */
+        .decor {
+            position: fixed;
+            z-index: -1;
+            pointer-events: none;
+        }
+        
+        .decor-circle {
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            background: var(--gold-lighter);
+            top: -300px;
+            right: -300px;
+        }
+        
+        .decor-hex {
+            width: 200px;
+            height: 230px;
+            background: rgba(212, 175, 55, 0.03);
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            bottom: -50px;
+            left: -50px;
+            transform: rotate(15deg);
+        }
+        
+        /* Lightbox customizations */
+        .fslightbox-toolbar-button {
+            background: rgba(0,0,0,0.5) !important;
+            color: var(--gold) !important;
+        }
+        
+        .fslightbox-container {
+            background: rgba(0,0,0,0.92) !important;
+        }
+        
+        .fslightbox-caption {
+            color: var(--gold) !important;
+            font-size: 1.2rem !important;
+            font-family: 'Playfair Display', serif !important;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+            
+            .category-filter {
+                gap: 12px;
+            }
+            
+            .category-label {
+                padding: 8px 16px;
+                font-size: 0.9rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 15px 20px;
+            }
+            
+            .navbar h1 {
+                font-size: 1.8rem;
+            }
+            
+            .upload-btn {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+            
+            .gallery-header h2 {
+                font-size: 2.2rem;
+            }
+            
+            .gallery-grid {
+                gap: 20px;
+            }
+            
+            .category-filter {
+                gap: 8px;
+                justify-content: flex-start;
+                overflow-x: auto;
+                padding-bottom: 10px;
+                margin-bottom: 30px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .navbar {
+                flex-direction: column;
+                gap: 15px;
+                padding: 15px;
+            }
+            
+            .upload-btn {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .category-label {
+                padding: 6px 12px;
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <div class="navbar">
+        <h1>CASTLE EMPIRE GALLERY</h1>
+        <a href="Upload.html" class="upload-btn">
+            <i class="fas fa-upload"></i> Upload Image
+        </a>
+    </div>
+    
+    <!-- Decorative Elements -->
+    <div class="decor decor-circle"></div>
+    <div class="decor decor-hex"></div>
+    
+    <!-- Gallery Container -->
+    <div class="gallery-container">
+        <div class="gallery-header">
+            <h2>Architectural Masterpieces</h2>
+            <p>Discover our portfolio of futuristic designs that blend innovation with timeless elegance</p>
+        </div>
+        
+        <!-- Category Filter -->
+        <div class="category-filter" id="categoryFilter">
+            <input type="radio" id="all" name="category" class="category-option" value="all" checked>
+            <label for="all" class="category-label">All Categories</label>
+            
+            <input type="radio" id="bedroom2" name="category" class="category-option" value="2 bedroom">
+            <label for="bedroom2" class="category-label">2 Bedroom</label>
+            
+            <input type="radio" id="bedroom3" name="category" class="category-option" value="3 bedroom">
+            <label for="bedroom3" class="category-label">3 Bedroom</label>
+            
+            <input type="radio" id="duplex" name="category" class="category-option" value="duplex">
+            <label for="duplex" class="category-label">Duplex</label>
+            
+            <input type="radio" id="office" name="category" class="category-option" value="office">
+            <label for="office" class="category-label">Office</label>
+            
+            <input type="radio" id="religious" name="category" class="category-option" value="religious">
+            <label for="religious" class="category-label">Religious</label>
+            
+            <input type="radio" id="selfcon" name="category" class="category-option" value="Self Con">
+            <label for="selfcon" class="category-label">Self Con</label>
+            
+            <input type="radio" id="hotel" name="category" class="category-option" value="hotel">
+            <label for="hotel" class="category-label">Hotel</label>
+            
+            <input type="radio" id="school" name="category" class="category-option" value="school">
+            <label for="school" class="category-label">School</label>
+            
+            <input type="radio" id="hostel" name="category" class="category-option" value="hostel">
+            <label for="hostel" class="category-label">Hostel</label>
+        </div>
+        
+        <!-- Spinner -->
+        <div id="spinner" class="spinner hidden"></div>
+        
+        <!-- Gallery Grid -->
+        <div id="gallery" class="gallery-grid">
+            <!-- Images will be inserted here by JavaScript -->
+        </div>
+    </div>
+    
+    <script>
+        // Supabase Client
+        const client = supabase.createClient(
+            'https://wljyuchpddhobtvkitgs.supabase.co',
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indsanl1Y2hwZGRob2J0dmtpdGdzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDc1NTU2ODcsImV4cCI6MjA2MzEzMTY4N30.rgiNqBnDYRqGQBSbRlin1AGIcUyCJJRhjDnD-8U7dXw'
+        );
+        
+        // Show spinner
+        function showSpinner() {
+            document.getElementById('spinner').classList.remove('hidden');
+        }
+        
+        // Hide spinner
+        function hideSpinner() {
+            document.getElementById('spinner').classList.add('hidden');
+        }
+        
+        // Format date
+        function formatDate(dateString) {
+            const options = { year: 'numeric', month: 'short', day: 'numeric' };
+            return new Date(dateString).toLocaleDateString(undefined, options);
+        }
+        
+        // Fetch gallery images with category filter
+        async function fetchGallery(category = 'all') {
+            showSpinner();
+            const galleryDiv = document.getElementById('gallery');
+            
+            try {
+                let query = client
+                    .from('Gallery')
+                    .select('*')
+                    .order('created_at', { ascending: false });
+                
+                // Add category filter if not "all"
+                if (category !== 'all') {
+                    query = query.eq('Category', category);
+                }
+                
+                const { data: images, error } = await query;
+                
+                if (error) {
+                    throw new Error(`Supabase Error: ${error.message}`);
+                }
+                
+                galleryDiv.innerHTML = '';
+                
+                if (images.length === 0) {
+                    galleryDiv.innerHTML = `
+                        <div class="empty-state">
+                            <i class="fas fa-camera"></i>
+                            <h3>No Images Found</h3>
+                            <p>No images found in the ${category === 'all' ? 'gallery' : category} category.</p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                // Create gallery items
+                images.forEach(image => {
+                    const galleryItem = document.createElement('div');
+                    galleryItem.className = 'gallery-item';
+                    
+                    const imgAnchor = document.createElement('a');
+                    imgAnchor.href = image.image_url;
+                    imgAnchor.setAttribute('data-fslightbox', 'gallery');
+                    imgAnchor.setAttribute('data-caption', image.title || 'Castle Empire Architecture');
+                    
+                    const imgElement = document.createElement('img');
+                    imgElement.src = image.image_url;
+                    imgElement.alt = image.title || 'Architectural Design';
+                    imgElement.className = 'gallery-img';
+                    
+                    const overlay = document.createElement('div');
+                    overlay.className = 'item-overlay';
+                    
+                    const title = document.createElement('div');
+                    title.className = 'item-title';
+                    title.textContent = image.title || 'Untitled Design';
+                    
+                    const date = document.createElement('div');
+                    date.className = 'item-date';
+                    date.innerHTML = `<i class="far fa-calendar"></i> ${formatDate(image.created_at)}`;
+                    
+                    // Add category badge if category exists
+                    if (image.category) {
+                        const categoryBadge = document.createElement('div');
+                        categoryBadge.className = 'item-category';
+                        categoryBadge.textContent = image.category;
+                        galleryItem.appendChild(categoryBadge);
+                    }
+                    
+                    overlay.appendChild(title);
+                    overlay.appendChild(date);
+                    
+                    imgAnchor.appendChild(imgElement);
+                    galleryItem.appendChild(imgAnchor);
+                    galleryItem.appendChild(overlay);
+                    galleryDiv.appendChild(galleryItem);
+                });
+                
+                // Initialize lightbox
+                if (window.refreshFsLightbox) {
+                    window.refreshFsLightbox();
+                }
+            } 
+            catch (error) {
+                console.error('Error:', error);
+                galleryDiv.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <h3>Error Loading Gallery</h3>
+                        <p>${error.message || 'Failed to load images. Please try again later.'}</p>
+                    </div>
+                `;
+            } 
+            finally {
+                hideSpinner();
+            }
+        }
+        
+        // Initialize category filter functionality
+        function initCategoryFilter() {
+            const categoryOptions = document.querySelectorAll('.category-option');
+            
+            categoryOptions.forEach(option => {
+                option.addEventListener('change', () => {
+                    fetchGallery(option.value);
+                });
+            });
+        }
+        
+        // Initialize on load
+        window.onload = () => {
+            fetchGallery();
+            initCategoryFilter();
+        };
+    </script>
+</body>
+</html>
